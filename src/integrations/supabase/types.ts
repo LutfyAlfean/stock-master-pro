@@ -14,16 +14,181 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      barang: {
+        Row: {
+          created_at: string
+          id: string
+          kategori: string
+          kode: string
+          minimal_stok: number
+          nama: string
+          satuan: string
+          stok: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kategori: string
+          kode: string
+          minimal_stok?: number
+          nama: string
+          satuan: string
+          stok?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kategori?: string
+          kode?: string
+          minimal_stok?: number
+          nama?: string
+          satuan?: string
+          stok?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      barang_keluar: {
+        Row: {
+          barang_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          jumlah: number
+          keterangan: string | null
+          tanggal_keluar: string
+        }
+        Insert: {
+          barang_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          jumlah: number
+          keterangan?: string | null
+          tanggal_keluar?: string
+        }
+        Update: {
+          barang_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          jumlah?: number
+          keterangan?: string | null
+          tanggal_keluar?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "barang_keluar_barang_id_fkey"
+            columns: ["barang_id"]
+            isOneToOne: false
+            referencedRelation: "barang"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      barang_masuk: {
+        Row: {
+          barang_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          jumlah: number
+          keterangan: string | null
+          tanggal_kadaluarsa: string | null
+          tanggal_masuk: string
+        }
+        Insert: {
+          barang_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          jumlah: number
+          keterangan?: string | null
+          tanggal_kadaluarsa?: string | null
+          tanggal_masuk?: string
+        }
+        Update: {
+          barang_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          jumlah?: number
+          keterangan?: string | null
+          tanggal_kadaluarsa?: string | null
+          tanggal_masuk?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "barang_masuk_barang_id_fkey"
+            columns: ["barang_id"]
+            isOneToOne: false
+            referencedRelation: "barang"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          full_name: string
+          id: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "administrator" | "staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +315,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["administrator", "staff"],
+    },
   },
 } as const
