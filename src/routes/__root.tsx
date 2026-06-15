@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "tokomf" },
+      { name: "description", content: "Toko MF" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "tokomf" },
+      { property: "og:description", content: "Toko MF" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "tokomf" },
+      { name: "twitter:description", content: "Toko MF" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c450d0bd-4388-4aad-a6a6-d12c8f080c40/id-preview-02561a23--fb3bb2f4-e9a3-4893-9648-0dcef48bc567.lovable.app-1781527465638.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c450d0bd-4388-4aad-a6a6-d12c8f080c40/id-preview-02561a23--fb3bb2f4-e9a3-4893-9648-0dcef48bc567.lovable.app-1781527465638.png" },
     ],
     links: [
       {
