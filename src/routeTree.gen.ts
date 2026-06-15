@@ -12,7 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedManajemenPenggunaRouteImport } from './routes/_authenticated/manajemen-pengguna'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedBarangMasukRouteImport } from './routes/_authenticated/barang-masuk'
+import { Route as AuthenticatedBarangKeluarRouteImport } from './routes/_authenticated/barang-keluar'
+import { Route as AuthenticatedBarangRouteImport } from './routes/_authenticated/barang'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -28,40 +32,93 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedManajemenPenggunaRoute =
+  AuthenticatedManajemenPenggunaRouteImport.update({
+    id: '/manajemen-pengguna',
+    path: '/manajemen-pengguna',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBarangMasukRoute =
+  AuthenticatedBarangMasukRouteImport.update({
+    id: '/barang-masuk',
+    path: '/barang-masuk',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBarangKeluarRoute =
+  AuthenticatedBarangKeluarRouteImport.update({
+    id: '/barang-keluar',
+    path: '/barang-keluar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBarangRoute = AuthenticatedBarangRouteImport.update({
+  id: '/barang',
+  path: '/barang',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/barang': typeof AuthenticatedBarangRoute
+  '/barang-keluar': typeof AuthenticatedBarangKeluarRoute
+  '/barang-masuk': typeof AuthenticatedBarangMasukRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/manajemen-pengguna': typeof AuthenticatedManajemenPenggunaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/barang': typeof AuthenticatedBarangRoute
+  '/barang-keluar': typeof AuthenticatedBarangKeluarRoute
+  '/barang-masuk': typeof AuthenticatedBarangMasukRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/manajemen-pengguna': typeof AuthenticatedManajemenPenggunaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/barang': typeof AuthenticatedBarangRoute
+  '/_authenticated/barang-keluar': typeof AuthenticatedBarangKeluarRoute
+  '/_authenticated/barang-masuk': typeof AuthenticatedBarangMasukRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/manajemen-pengguna': typeof AuthenticatedManajemenPenggunaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/barang'
+    | '/barang-keluar'
+    | '/barang-masuk'
+    | '/dashboard'
+    | '/manajemen-pengguna'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/barang'
+    | '/barang-keluar'
+    | '/barang-masuk'
+    | '/dashboard'
+    | '/manajemen-pengguna'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/barang'
+    | '/_authenticated/barang-keluar'
+    | '/_authenticated/barang-masuk'
     | '/_authenticated/dashboard'
+    | '/_authenticated/manajemen-pengguna'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/manajemen-pengguna': {
+      id: '/_authenticated/manajemen-pengguna'
+      path: '/manajemen-pengguna'
+      fullPath: '/manajemen-pengguna'
+      preLoaderRoute: typeof AuthenticatedManajemenPenggunaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -100,15 +164,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/barang-masuk': {
+      id: '/_authenticated/barang-masuk'
+      path: '/barang-masuk'
+      fullPath: '/barang-masuk'
+      preLoaderRoute: typeof AuthenticatedBarangMasukRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/barang-keluar': {
+      id: '/_authenticated/barang-keluar'
+      path: '/barang-keluar'
+      fullPath: '/barang-keluar'
+      preLoaderRoute: typeof AuthenticatedBarangKeluarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/barang': {
+      id: '/_authenticated/barang'
+      path: '/barang'
+      fullPath: '/barang'
+      preLoaderRoute: typeof AuthenticatedBarangRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBarangRoute: typeof AuthenticatedBarangRoute
+  AuthenticatedBarangKeluarRoute: typeof AuthenticatedBarangKeluarRoute
+  AuthenticatedBarangMasukRoute: typeof AuthenticatedBarangMasukRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedManajemenPenggunaRoute: typeof AuthenticatedManajemenPenggunaRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBarangRoute: AuthenticatedBarangRoute,
+  AuthenticatedBarangKeluarRoute: AuthenticatedBarangKeluarRoute,
+  AuthenticatedBarangMasukRoute: AuthenticatedBarangMasukRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedManajemenPenggunaRoute: AuthenticatedManajemenPenggunaRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
