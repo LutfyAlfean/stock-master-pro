@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMINISTRATOR
+  STAFF
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  fullName     String
+  passwordHash String
+  role         Role     @default(STAFF)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  barangMasuk  BarangMasuk[]
+  barangKeluar BarangKeluar[]
+}
+
+model Barang {
+  id           String   @id @default(cuid())
+  kode         String   @unique
+  nama         String
+  kategori     String
+  satuan       String
+  stok         Int      @default(0)
+  minimalStok  Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  masuk  BarangMasuk[]
+  keluar BarangKeluar[]
+}
+
+model BarangMasuk {
+  id                String   @id @default(cuid())
+  barangId          String
+  barang            Barang   @relation(fields: [barangId], references: [id], onDelete: Cascade)
+  jumlah            Int
+  tanggalMasuk      DateTime @default(now())
+  tanggalKadaluarsa DateTime?
+  keterangan        String?
+  createdById       String?
+  createdBy         User?    @relation(fields: [createdById], references: [id])
+  createdAt         DateTime @default(now())
+}
+
+model BarangKeluar {
+  id            String   @id @default(cuid())
+  barangId      String
+  barang        Barang   @relation(fields: [barangId], references: [id], onDelete: Cascade)
+  jumlah        Int
+  tanggalKeluar DateTime @default(now())
+  keterangan    String?
+  createdById   String?
+  createdBy     User?    @relation(fields: [createdById], references: [id])
+  createdAt     DateTime @default(now())
+}
